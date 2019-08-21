@@ -46,8 +46,6 @@ def main():
             # Deleted tweet events do not have any associated text
             continue
 
-        print("===================================")
-
         # Tweet text
         hashtags = [h['text'] for h in tweet["entities"]["hashtags"]]
         test = {
@@ -69,6 +67,12 @@ def main():
     raw_bytes = bytesWriter.getvalue()
     print(len(raw_bytes))
     print(type(raw_bytes))
+
+    bytes_reader = io.BytesIO(raw_bytes)
+    decoder = avro.io.BinaryDecoder(bytes_reader)
+    reader = avro.io.DatumReader(schema)
+
+    print(reader.read(decoder))
 
 if __name__ == "__main__":
     main()
