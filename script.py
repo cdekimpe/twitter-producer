@@ -20,7 +20,6 @@ def main():
 
 
     schema = avro.schema.Parse(json.dumps({
-        "doc": "Tweets serializer",
         "name": "Tweet",
         "namespace": "me.dekimpe",
         "type": "record",
@@ -28,7 +27,7 @@ def main():
             {"name": "text", "type": "string"},
             {"name": "hashtags", "type": {
                 "type": "array",
-                "items": "string"
+                "items": ["string", "null"]
             }}
         ]
     }))
