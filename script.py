@@ -31,7 +31,6 @@ def main():
         ]
     }
 
-    #avroSchema = avro.schema.parse(schema)
     writer = avro.io.DatumWriter(schema)
     bytesWriter = io.BytesIO()
     encoder = avro.io.BinaryEncoder(bytesWriter)
@@ -66,7 +65,7 @@ def main():
         #if len(hashtags) > 0:
         #    print(hashtags)
 
-    raw_bytes = bytes_writer.getvalue()
+    raw_bytes = bytesWriter.getvalue()
     print(len(raw_bytes))
     print(type(raw_bytes))
 
