@@ -3,6 +3,7 @@
 import json
 import twitter  # pip install twitter
 from kafka import KafkaProducer
+from fastavro import writer, reader, parse_schema
 
 
 def main():
@@ -13,9 +14,9 @@ def main():
     oauth = twitter.OAuth(OAJson["token"], OAJson["token_secret"], OAJson["consumer_key"], OAJson["consumer_secret"])
     t = twitter.TwitterStream(auth=oauth)
 
-    producer = KafkaProducer(
-        bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
-        value_serializer=lambda x: json.dumps(x).encode('utf-8'))
+    #producer = KafkaProducer(
+    #    bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
+    #    value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
     sample_tweets_in_english = t.statuses.sample(language="en")
     for tweet in sample_tweets_in_english:
