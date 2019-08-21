@@ -1,0 +1,13 @@
+{
+	"doc": "Tweets serializer",
+    "name": "Tweet",
+    "namespace": "me.dekimpe",
+    "type": "record",
+    "fields": [
+        {"name": "text", "type": "string"},
+        {"name": "hashtags", "type": {
+            "type": "array",
+            "items": "string"
+        }}
+    ]
+}
