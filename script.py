@@ -8,7 +8,8 @@ from kafka import KafkaProducer
 def main():
     # Put here your Twitter API credentials obtained at https://apps.twitter.com/
     # Note: you need a Twitter account to create an app.
-    OAJson = json.load("../twitterOAuth.json")
+    with open("../twitterOAuth.json") as file:
+        OAJson = json.load(file)
     oauth = twitter.OAuth(OAJson["token"], OAJson["token_secret"], OAJson["consumer_key"], OAJson["consumer_secret"])
     t = twitter.TwitterStream(auth=oauth)
 
