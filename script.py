@@ -49,9 +49,10 @@ def main():
         print("===================================")
 
         # Tweet text
+        hashtags = [h['text'] for h in tweet["entities"]["hashtags"]]
         test = {
             'text': tweet["text"],
-            'hashtags': tweet["entities"]["hashtags"]["text"]
+            'hashtags': hashtags
         }
         writer.write(test, encoder)
         u = u + 1
