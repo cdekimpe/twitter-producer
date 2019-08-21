@@ -24,10 +24,10 @@ def main():
         'type': 'record',
         'fields': [
             {'name': 'text', 'type': 'string'},
-            {'name': 'hashtags', 'type': {
-                'type': 'array',
-                'items': 'string'
-            }}
+            #{'name': 'hashtags', 'type': {
+            #    'type': 'array',
+            #    'items': 'string'
+            #}}
         ]
     }
 
