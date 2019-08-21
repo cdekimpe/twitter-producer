@@ -1,9 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+import io
 import json
 import twitter  # pip install twitter
+import avro.schema
+import avro.io
 from kafka import KafkaProducer
-from fastavro import writer, reader, parse_schema
 
 
 def main():
@@ -14,11 +16,32 @@ def main():
     oauth = twitter.OAuth(OAJson["token"], OAJson["token_secret"], OAJson["consumer_key"], OAJson["consumer_secret"])
     t = twitter.TwitterStream(auth=oauth)
 
+    # Schema Avro
+    schema = {
+        'doc': 'Tweets serializer',
+        'name': 'Tweet',
+        'namespace': 'me.dekimpe',
+        'type': 'record',
+        'fields': [
+            {'name': 'text', 'type': 'string'},
+            {'name': 'hashtags', 'type': {
+                'type': 'array',
+                'items': 'string'
+            }}
+        ]
+    }
+
+    avroSchema = avro.schema.parse(schema)
+    writer = avro.io.DatumWriter(avroSchema)
+    bytesWriter = io.BytesIO()
+    encoder = avro.io.BinaryEncoder(bytesWriter)
+
     #producer = KafkaProducer(
     #    bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
     #    value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
     sample_tweets_in_english = t.statuses.sample(language="en")
+    u = 0
     for tweet in sample_tweets_in_english:
         if "delete" in tweet:
             # Deleted tweet events do not have any associated text
@@ -27,13 +50,25 @@ def main():
         print("===================================")
 
         # Tweet text
-        print(tweet["text"])
+        test = {
+            'text': tweet["text"],
+            'hashtags': tweet["entities"]["hashtags"]
+        }
+        writer.write(test, encoder)
+        u = u + 1
+        if (u > 100):
+            break
+
+        #print(tweet["text"])
 
         # Collect hashtags
-        hashtags = [h['text'] for h in tweet["entities"]["hashtags"]]
-        if len(hashtags) > 0:
-            print(hashtags)
+        #hashtags = [h['text'] for h in tweet["entities"]["hashtags"]]
+        #if len(hashtags) > 0:
+        #    print(hashtags)
 
+    raw_bytes = bytes_writer.getvalue()
+    print(len(raw_bytes))
+    print(type(raw_bytes))
 
 if __name__ == "__main__":
     main()
