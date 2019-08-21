@@ -72,7 +72,7 @@ def main():
     decoder = avro.io.BinaryDecoder(bytes_reader)
     reader = avro.io.DatumReader(schema)
 
-    print(reader.read(decoder))
+    print(decoder.read(decoder))
 
 if __name__ == "__main__":
     main()
