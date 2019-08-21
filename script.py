@@ -17,20 +17,21 @@ def main():
     t = twitter.TwitterStream(auth=oauth)
 
     # Schema Avro
-    schema = {
-        'doc': 'Tweets serializer',
-        'name': 'Tweet',
-        'namespace': 'me.dekimpe',
-        'type': 'record',
-        'fields': [
-            {'name': 'text', 'type': 'string'},
-            #{'name': 'hashtags', 'type': {
-            #    'type': 'array',
-            #    'items': 'string'
-            #}}
-        ]
-    }
 
+
+    schema = avro.schema.Parse(json.dumps({
+        "doc": "Tweets serializer",
+        "name": "Tweet",
+        "namespace": "me.dekimpe",
+        "type": "record",
+        "fields": [
+            {"name": "text", "type": "string"},
+            {"name": "hashtags", "type": {
+                "type": "array",
+                "items": "string"
+            }}
+        ]
+    }))
     writer = avro.io.DatumWriter(schema)
     bytesWriter = io.BytesIO()
     encoder = avro.io.BinaryEncoder(bytesWriter)
