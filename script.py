@@ -31,8 +31,8 @@ def main():
         ]
     }
 
-    avroSchema = avro.schema.parse(schema)
-    writer = avro.io.DatumWriter(avroSchema)
+    #avroSchema = avro.schema.parse(schema)
+    writer = avro.io.DatumWriter(schema)
     bytesWriter = io.BytesIO()
     encoder = avro.io.BinaryEncoder(bytesWriter)
 
