@@ -55,6 +55,7 @@ def main():
         writer.write(test, encoder)
         rawBytes = bytesWriter.getvalue()
         producer.send(rawBytes, 'Tweets-1')
+        print(rawBytes)
 
 if __name__ == "__main__":
     main()
