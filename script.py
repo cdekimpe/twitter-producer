@@ -27,7 +27,7 @@ def main():
             {"name": "text", "type": "string"},
             {"name": "hashtags", "type": {
                 "type": "array",
-                "items": ["string", "null"]
+                "items": ["null", "string"]
             }}
         ]
     }))
