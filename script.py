@@ -27,7 +27,7 @@ def main():
             {"name": "text", "type": "string"},
             {"name": "hashtags", "type": {
                 "type": "array",
-                "items": ["null", "string"]
+                "items": ["String", "null"]
             }}
         ]
     }))
@@ -51,7 +51,7 @@ def main():
         # Tweet text
         test = {
             'text': tweet["text"],
-            'hashtags': tweet["entities"]["hashtags"]
+            'hashtags': tweet["entities"]["hashtags"]["text"]
         }
         writer.write(test, encoder)
         u = u + 1
