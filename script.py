@@ -53,9 +53,9 @@ def main():
             'hashtags': hashtags
         }
         writer.write(test, encoder)
-        u = u + 1
-        if (u > 100):
-            break
+        #u = u + 1
+        #if (u > 1):
+        break
 
         #print(tweet["text"])
 
@@ -67,12 +67,13 @@ def main():
     raw_bytes = bytesWriter.getvalue()
     print(len(raw_bytes))
     print(type(raw_bytes))
+    print(raw_bytes)
 
-    bytes_reader = io.BytesIO(raw_bytes)
-    decoder = avro.io.BinaryDecoder(bytes_reader)
-    reader = avro.io.DatumReader(schema)
+    #bytes_reader = io.BytesIO(raw_bytes)
+    #decoder = avro.io.BinaryDecoder(bytes_reader)
+    #reader = avro.io.DatumReader(schema)
 
-    print(decoder.read(decoder))
+    #print(decoder.read(decoder))
 
 if __name__ == "__main__":
     main()
