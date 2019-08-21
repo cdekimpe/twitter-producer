@@ -25,10 +25,10 @@ def main():
         "type": "record",
         "fields": [
             {"name": "text", "type": "string"},
-            {"name": "hashtags", "type": {
+            {"name": "hashtags", "type": [{
                 "type": "array",
-                "items": ["string", "null"]
-            }}
+                "items": "string"
+            }, "null"]}
         ]
     }))
     writer = avro.io.DatumWriter(schema)
