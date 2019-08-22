@@ -58,7 +58,7 @@ def main():
         break
 
     rawBytes = bytesWriter.getvalue()
-    producer.send(rawBytes, 'tweets-1')
+    #producer.send(rawBytes, 'tweets-1')
     print(rawBytes)
 
 
