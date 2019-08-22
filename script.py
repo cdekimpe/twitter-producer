@@ -36,7 +36,8 @@ def main():
     encoder = avro.io.BinaryEncoder(bytesWriter)
 
     producer = KafkaProducer(
-        bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'])
+        bootstrap_servers=['192.168.10.2:9092', '192.168.10.3:9092', '192.168.10.4:9092'],
+        value_serializer=lambda v: binascii.hexlify(v.encode('utf-8')))
         #value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
     sample_tweets_in_english = t.statuses.sample(language="en")
