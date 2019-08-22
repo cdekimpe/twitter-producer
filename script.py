@@ -17,50 +17,44 @@ def main():
     t = twitter.TwitterStream(auth=oauth)
 
     # Schema Avro
-
-
-    schema = avro.schema.Parse(json.dumps({
-        "name": "Tweet",
-        "namespace": "me.dekimpe",
-        "type": "record",
-        "fields": [
-            {"name": "text", "type": "string"},
-            {"name": "hashtags", "type": {
-                "type": "array",
-                "items": "string"
-            }}
-        ]
-    }))
-    writer = avro.io.DatumWriter(schema)
-    bytesWriter = io.BytesIO()
-    encoder = avro.io.BinaryEncoder(bytesWriter)
+    #schema = avro.schema.Parse(json.dumps({
+    #    "name": "Tweet",
+    #    "namespace": "me.dekimpe",
+    #    "type": "record",
+    #    "fields": [
+    #        {"name": "text", "type": "string"},
+    #        {"name": "hashtags", "type": {
+    #            "type": "array",
+    #            "items": "string"
+    #        }}
+    #    ]
+    #}))
+    #writer = avro.io.DatumWriter(schema)
+    #bytesWriter = io.BytesIO()
+    #encoder = avro.io.BinaryEncoder(bytesWriter)
 
     producer = KafkaProducer(
-        bootstrap_servers=['192.168.10.2:9092', '192.168.10.3:9092', '192.168.10.4:9092'])
+        bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
+        value_serializer=lambda x: json.dumps(x).encode('utf-8'))
         #value_serializer=lambda v: binascii.hexlify(v.encode('utf-8')))
-        #value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
     sample_tweets_in_english = t.statuses.sample(language="en")
-    u = 0
     for tweet in sample_tweets_in_english:
         if "delete" in tweet:
             # Deleted tweet events do not have any associated text
             continue
 
         # Tweet text
-        hashtags = [h['text'] for h in tweet["entities"]["hashtags"]]
-        test = {
-            'text': tweet["text"],
-            'hashtags': hashtags
-        }
-        print(test)
-        producer.send(json.dumps(test), 'tweets-1')
-        writer.write(test, encoder)
-        break
+        product = {}
+        product['text'] = tweet['text']
+        product['hashtags'] = [h['text'] for h in tweet["entities"]["hashtags"]]
+        producer.send(product, 'tweets-1')
+        print(product)
+        #writer.write(product, encoder)
 
-    rawBytes = bytesWriter.getvalue()
+    #rawBytes = bytesWriter.getvalue()
     #producer.send(rawBytes, 'tweets-1')
-    print(rawBytes)
+    #print(rawBytes)
 
 
 if __name__ == "__main__":
