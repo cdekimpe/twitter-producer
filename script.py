@@ -46,8 +46,7 @@ def main():
         # Tweet text
         product = {}
         product['text'] = tweet['text']
-
-        print([h['text'] for h in tweet["entities"]["hashtags"]])
+        product['hashtags'] = [h['text'] for h in tweet["entities"]["hashtags"]]
         #producer.send(product, 'tweets-1')
         productJson = json.dumps(product).encode('utf-8')
         print(productJson)
