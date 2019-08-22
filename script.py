@@ -49,8 +49,8 @@ def main():
 
         print([h['text'] for h in tweet["entities"]["hashtags"]])
         #producer.send(product, 'tweets-1')
-        print(product)
-        print(json.dumps(product))
+        productJson = json.dumps(x).encode('utf-8')
+        print(productJson)
         #writer.write(product, encoder)
 
     #rawBytes = bytesWriter.getvalue()
