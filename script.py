@@ -44,9 +44,9 @@ def main():
             continue
 
         # Tweet text
-        product = []
+        product = {}
         product['text'] = tweet['text']
-        product['hashtags'] = [h['text'] for h in tweet["entities"]["hashtags"]]
+        product['hashtags'] = {[h['text'] for h in tweet["entities"]["hashtags"]]}
         producer.send(product, 'tweets-1')
         print(product)
         #writer.write(product, encoder)
