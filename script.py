@@ -57,9 +57,12 @@ def main():
             'hashtags': hashtags
         }
         writer.write(test, encoder)
-        rawBytes = bytesWriter.getvalue()
-        producer.send(rawBytes, 'tweets-1')
-        print(rawBytes)
+        break
+
+    rawBytes = bytesWriter.getvalue()
+    producer.send(rawBytes, 'tweets-1')
+    print(rawBytes)
+
 
 if __name__ == "__main__":
     main()
