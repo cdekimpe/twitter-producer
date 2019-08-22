@@ -36,9 +36,9 @@ def main():
     encoder = avro.io.BinaryEncoder(bytesWriter)
 
     producer = KafkaProducer(
-        bootstrap_servers=['192.168.10.2:9092'],
+        bootstrap_servers=['192.168.10.2:9092'])
         #value_serializer=lambda v: binascii.hexlify(v.encode('utf-8')))
-        value_serializer=lambda x: json.dumps(x).encode('utf-8'))
+        #value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
     sample_tweets_in_english = t.statuses.sample(language="en")
     u = 0
@@ -54,7 +54,7 @@ def main():
             'hashtags': hashtags
         }
         print(test)
-        producer.send(test, 'tweets-1')
+        producer.send(json.dumps(test), 'tweets-1')
         writer.write(test, encoder)
         break
 
