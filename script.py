@@ -56,6 +56,7 @@ def main():
             'text': tweet["text"],
             'hashtags': hashtags
         }
+        print(test)
         writer.write(test, encoder)
         break
 
