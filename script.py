@@ -42,6 +42,9 @@ def main():
     sample_tweets_in_english = t.statuses.sample(language="en")
     u = 0
     for tweet in sample_tweets_in_english:
+        writer = avro.io.DatumWriter(schema)
+        bytesWriter = io.BytesIO()
+        encoder = avro.io.BinaryEncoder(bytesWriter)
         if "delete" in tweet:
             # Deleted tweet events do not have any associated text
             continue
