@@ -3,9 +3,7 @@
 import io
 import json
 import twitter  # pip install twitter
-#import avro.schema
-#import avro.io
-from kafka import KafkaProducer
+from kafka import KafkaProducer # pip install kafka
 
 
 def main():
@@ -21,23 +19,6 @@ def main():
         bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
         value_serializer=lambda x: json.dumps(x, ensure_ascii=False).encode('utf-8'))
 
-    # Schema Avro
-    #schema = avro.schema.Parse(json.dumps({
-    #    "name": "Tweet",
-    #    "namespace": "me.dekimpe",
-    #    "type": "record",
-    #    "fields": [
-    #        {"name": "text", "type": "string"},
-    #        {"name": "hashtags", "type": {
-    #            "type": "array",
-    #            "items": "string"
-    #        }}
-    #    ]
-    #}))
-    #writer = avro.io.DatumWriter(schema)
-    #bytesWriter = io.BytesIO()
-    #encoder = avro.io.BinaryEncoder(bytesWriter)
-
     sample_tweets_in_english = t.statuses.sample(language="en")
     for tweet in sample_tweets_in_english:
         if "delete" in tweet:
@@ -45,17 +26,11 @@ def main():
             continue
 
         # Tweet text
-        product = {}
-        product['text'] = tweet['text']
-        product['hashtags'] = [h['text'] for h in tweet["entities"]["hashtags"]]
-        productJson = json.dumps(product, ensure_ascii=False)
-        print(productJson)
+        product = {
+            'text': tweet['text'],
+            'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
+        }
         producer.send('tweets-2', product)
-
-    #rawBytes = bytesWriter.getvalue()
-    #producer.send(rawBytes, 'tweets-1')
-    #print(rawBytes)
-
 
 if __name__ == "__main__":
     main()
