@@ -19,7 +19,7 @@ def main():
 
     producer = KafkaProducer(
         bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
-        value_serializer=lambda x: json.dumps(x, ensure_ascii=False))
+        value_serializer=lambda x: json.dumps(x, ensure_ascii=False).encode('utf-8'))
 
     # Schema Avro
     #schema = avro.schema.Parse(json.dumps({
