@@ -12,14 +12,14 @@ def main():
     # Put here your Twitter API credentials obtained at https://apps.twitter.com/
     # Note: you need a Twitter account to create an app.
 
-    producer = KafkaProducer(
-        bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
-        value_serializer=lambda x: json.dumps(x, ensure_ascii=False))
-
     with open("../twitterOAuth.json") as file:
         OAJson = json.load(file)
     oauth = twitter.OAuth(OAJson["token"], OAJson["token_secret"], OAJson["consumer_key"], OAJson["consumer_secret"])
     t = twitter.TwitterStream(auth=oauth)
+
+    producer = KafkaProducer(
+        bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
+        value_serializer=lambda x: json.dumps(x, ensure_ascii=False))
 
     # Schema Avro
     #schema = avro.schema.Parse(json.dumps({
@@ -48,7 +48,7 @@ def main():
         product = {}
         product['text'] = tweet['text']
         product['hashtags'] = [h['text'] for h in tweet["entities"]["hashtags"]]
-        productJson = ""
+        productJson = json.dumps(product, ensure_ascii=False)
         print(productJson)
         producer.send(productJson, "tweets-1")
 
