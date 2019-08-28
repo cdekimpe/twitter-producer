@@ -50,7 +50,7 @@ def main():
         product['hashtags'] = [h['text'] for h in tweet["entities"]["hashtags"]]
         productJson = json.dumps(product, ensure_ascii=False)
         print(productJson)
-        producer.send(productJson, "tweets-2")
+        producer.send("tweets-2", productJson)
 
     #rawBytes = bytesWriter.getvalue()
     #producer.send(rawBytes, 'tweets-1')
