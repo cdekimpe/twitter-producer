@@ -3,8 +3,8 @@
 import io
 import json
 import twitter  # pip install twitter
-import avro.schema
-import avro.io
+#import avro.schema
+#import avro.io
 from kafka import KafkaProducer
 
 
