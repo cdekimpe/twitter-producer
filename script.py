@@ -3,13 +3,13 @@
 import io
 import json
 import twitter  # pip install twitter
-from kafka import KafkaProducer # pip install kafka
+from kafka import KafkaProducer # pip install kafka-python
 
 
 def main():
+
     # Put here your Twitter API credentials obtained at https://apps.twitter.com/
     # Note: you need a Twitter account to create an app.
-
     with open("../twitterOAuth.json") as file:
         OAJson = json.load(file)
     oauth = twitter.OAuth(OAJson["token"], OAJson["token_secret"], OAJson["consumer_key"], OAJson["consumer_secret"])
@@ -30,7 +30,7 @@ def main():
             'text': tweet['text'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
-        producer.send('tweets-2', product)
+        producer.send('tweets', product)
 
 if __name__ == "__main__":
     main()
