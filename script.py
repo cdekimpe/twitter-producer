@@ -28,6 +28,7 @@ def main():
         # Tweet text
         product = {
             'text': tweet['text'],
+            'date': tweet['created_at'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
         producer.send('tweets', product)
