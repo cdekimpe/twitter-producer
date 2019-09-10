@@ -43,4 +43,4 @@ def main():
         avroProducer.produce(topic='avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
         producer.send('tweets', product)
 
-avroProducer.flush(10)
+    avroProducer.flush(10)
