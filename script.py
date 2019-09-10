@@ -3,7 +3,6 @@
 import io
 import json
 import twitter  # pip install twitter
-from kafka import KafkaProducer # pip install kafka-python
 from confluent_kafka import avro # pip install confluent-kafka
 from confluent_kafka.avro import AvroProducer
 
@@ -44,3 +43,6 @@ def main():
         producer.send('tweets', product)
 
     avroProducer.flush(10)
+
+if __name__ == "__main__":
+    main()
