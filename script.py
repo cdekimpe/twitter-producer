@@ -4,6 +4,8 @@ import io
 import json
 import twitter  # pip install twitter
 from kafka import KafkaProducer # pip install kafka-python
+from confluent_kafka import avro # pip install confluent-kafka
+from confluent_kafka.avro import AvroProducer
 
 
 def main():
@@ -15,9 +17,12 @@ def main():
     oauth = twitter.OAuth(OAJson["token"], OAJson["token_secret"], OAJson["consumer_key"], OAJson["consumer_secret"])
     t = twitter.TwitterStream(auth=oauth)
 
-    producer = KafkaProducer(
-        bootstrap_servers=['kafka1.architect.data:9092', 'kafka2.architect.data:9092', 'kafka3.architect.data:9092'],
-        value_serializer=lambda x: json.dumps(x, ensure_ascii=False).encode('utf-8'))
+    key_schema = avro.load('schema/key.avsc')
+    value_schema = avro.load('schema/value.avsc')
+
+    avroProducer = AvroProducer(
+        {'bootstrap.servers': 'kafka1.architect.data:9092,kafka2.architect.data:9092,kafka3.architect.data:9092'},
+        default_key_schema=key_schema, default_value_schema=value_schema)
 
     sample_tweets_in_english = t.statuses.sample(language="en")
     for tweet in sample_tweets_in_english:
@@ -26,12 +31,16 @@ def main():
             continue
 
         # Tweet text
-        product = {
+        date = tweet['created_at'].split(' ')
+        key = {
+            'date': date[5] + "-" + date[1] + "-" + date[2] + "-" + date[3].split(':')[0]
+        }
+        value = {
             'text': tweet['text'],
             'date': tweet['created_at'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
+        avroProducer.produce(topic='avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
         producer.send('tweets', product)
 
-if __name__ == "__main__":
-    main()
+avroProducer.flush(10)

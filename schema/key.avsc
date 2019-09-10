@@ -1,0 +1,8 @@
+{
+    "name": "Tweet",
+    "namespace": "me.dekimpe",
+    "type": "record",
+    "fields": [
+		{"name": "date", "type": "long"}
+    ]
+}
