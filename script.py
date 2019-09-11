@@ -39,8 +39,7 @@ def main():
             'date': tweet['created_at'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
-        avroProducer.produce(topic='avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
-        producer.send('tweets-avro', product)
+        avroProducer.produce(topic='tweets-avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
         avroProducer.flush(10)
 
 
