@@ -20,7 +20,7 @@ def main():
     value_schema = avro.load('schema/value.avsc')
 
     avroProducer = AvroProducer(
-        {'bootstrap.servers': 'confluent-kafka.architect.data:9092', 'schema.registry.url': 'localhost:8081'},
+        {'bootstrap.servers': 'confluent-kafka.architect.data:9092', 'schema.registry.url': 'http://localhost:8081'},
         default_key_schema=key_schema, default_value_schema=value_schema)
 
     sample_tweets_in_english = t.statuses.sample(language="en")
