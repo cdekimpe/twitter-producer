@@ -20,7 +20,7 @@ def main():
     value_schema = avro.load('schema/value.avsc')
 
     avroProducer = AvroProducer(
-        {'bootstrap.servers': 'kafka1.architect.data:9092,kafka2.architect.data:9092,kafka3.architect.data:9092'},
+        {'bootstrap.servers': 'confluent-kafka.architect.data:9092', 'schema.registry.url': 'localhost:8081'},
         default_key_schema=key_schema, default_value_schema=value_schema)
 
     sample_tweets_in_english = t.statuses.sample(language="en")
@@ -40,9 +40,9 @@ def main():
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
         avroProducer.produce(topic='avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
-        producer.send('tweets', product)
+        producer.send('tweets-avro', product)
+        avroProducer.flush(10)
 
-    avroProducer.flush(10)
 
 if __name__ == "__main__":
     main()
