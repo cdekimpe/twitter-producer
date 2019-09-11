@@ -1,5 +1,5 @@
 {
-    "name": "Tweet",
+    "name": "Tweet-Values",
     "namespace": "me.dekimpe",
     "type": "record",
     "fields": [
