@@ -3,7 +3,7 @@
     "namespace": "me.dekimpe",
     "type": "record",
     "fields": [
-		{"name": "date", "type": "long"},
+		{"name": "date", "type": "string"},
         {"name": "text", "type": "string"},
         {"name": "hashtags", "type": {
             "type": "array",

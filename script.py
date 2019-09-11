@@ -35,8 +35,8 @@ def main():
             'date': date[5] + "-" + date[1] + "-" + date[2] + "-" + date[3].split(':')[0]
         }
         value = {
-            'text': tweet['text'],
             'date': tweet['created_at'],
+            'text': tweet['text'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
         avroProducer.produce(topic='tweets-avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
