@@ -1,6 +1,6 @@
 {
-    "name": "Tweet-Keys",
-    "namespace": "me.dekimpe",
+    "name": "Tweets",
+    "namespace": "me.dekimpe.keys",
     "type": "record",
     "fields": [
 		{"name": "date", "type": "string"}
