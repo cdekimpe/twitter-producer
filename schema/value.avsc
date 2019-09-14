@@ -3,6 +3,7 @@
     "namespace": "me.dekimpe.values",
     "type": "record",
     "fields": [
+        {"name": "timestamp", "type": "int"},
 		{"name": "date", "type": "string"},
         {"name": "text", "type": "string"},
         {"name": "hashtags", "type": {
