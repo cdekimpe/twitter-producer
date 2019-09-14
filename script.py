@@ -38,11 +38,12 @@ def main():
         }
         value = {
             'date': tweet['created_at'],
+            'key-test': date[5] + "-" + date[1] + "-" + date[2] + "-" + date[3].split(':')[0],
             'time': calendar.timegm(datetime.datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y").utctimetuple()),
             'text': tweet['text'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
-        avroProducer.produce(topic='tweets-avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
+        avroProducer.produce(topic='tweets-avro-3', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
         avroProducer.flush(10)
 
 

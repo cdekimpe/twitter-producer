@@ -4,6 +4,7 @@
     "type": "record",
     "fields": [
         {"name": "time", "type": "int"},
+        {"name": "key-test", "type": "string"},
 		{"name": "date", "type": "string"},
         {"name": "text", "type": "string"},
         {"name": "hashtags", "type": {
