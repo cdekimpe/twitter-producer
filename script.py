@@ -36,15 +36,14 @@ def main():
         key = {
             'date': date[5] + "-" + date[1] + "-" + date[2] + "-" + date[3].split(':')[0]
         }
-        #value = {
-        #    'date': tweet['created_at'],
-        #    'timestamp': calendar.timegm(datetime.datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y").utctimetuple()),
-        #    'text': tweet['text'],
-        #    'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
-        #}
-        print(calendar.timegm(datetime.datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y").utctimetuple()))
-        #avroProducer.produce(topic='tweets-avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
-        #avroProducer.flush(10)
+        value = {
+            'date': tweet['created_at'],
+            'timestamp': calendar.timegm(datetime.datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y").utctimetuple()),
+            'text': tweet['text'],
+            'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
+        }
+        avroProducer.produce(topic='tweets-avro', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
+        avroProducer.flush(10)
 
 
 if __name__ == "__main__":
