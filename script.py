@@ -38,7 +38,7 @@ def main():
         }
         value = {
             'date': tweet['created_at'],
-            'timestamp': calendar.timegm(datetime.datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y").utctimetuple()),
+            'time': calendar.timegm(datetime.datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y").utctimetuple()),
             'text': tweet['text'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
