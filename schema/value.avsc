@@ -1,14 +1,26 @@
 {
-    "name": "Tweet",
-    "namespace": "me.dekimpe.values",
-    "type": "record",
-    "fields": [
-        {"name": "timestamp", "type": "int"},
-		{"name": "date", "type": "string"},
-        {"name": "text", "type": "string"},
-        {"name": "hashtags", "type": {
-            "type": "array",
-            "items": "string"
-        }}
-    ]
+  "type": "record",
+  "name": "Tweet",
+  "namespace": "me.dekimpe.values",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "int"
+    },
+    {
+      "name": "date",
+      "type": "string"
+    },
+    {
+      "name": "text",
+      "type": "string"
+    },
+    {
+      "name": "hashtags",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    }
+  ]
 }
