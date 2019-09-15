@@ -1,3 +1,11 @@
 {
-    "type": "string"
+    "type": "record",
+    "namespace": "me.dekimpe.avro.key",
+    "name": "Tweet",
+    "fields": [
+        {
+            "name": "id",
+            "type": "string"
+        }
+    ]
 }

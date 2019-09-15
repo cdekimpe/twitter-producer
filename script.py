@@ -32,13 +32,16 @@ def main():
             continue
 
         # Tweet text
+        key = {
+            'id': tweet['id_str']
+        }
         value = {
             'date': tweet['created_at'],
             'timestamp': calendar.timegm(datetime.datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y").utctimetuple()),
             'text': tweet['text'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
-        avroProducer.produce(topic='tweets-test', key=tweet['id_str'], value=value, key_schema=key_schema, value_schema=value_schema)
+        avroProducer.produce(topic='tweets-test', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
         avroProducer.flush(10)
 
 

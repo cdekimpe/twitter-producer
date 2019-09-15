@@ -1,7 +1,7 @@
 {
   "type": "record",
+  "namespace": "me.dekimpe.avro.value",
   "name": "Tweet",
-  "namespace": "me.dekimpe.values",
   "fields": [
     {
       "name": "timestamp",
