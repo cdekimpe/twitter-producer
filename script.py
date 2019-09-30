@@ -20,7 +20,6 @@ def main():
 
     key_schema = avro.load('schema/key.avsc')
     value_schema = avro.load('schema/value.avsc')
-
     avroProducer = AvroProducer(
         {'bootstrap.servers': 'confluent-kafka.architect.data:9092', 'schema.registry.url': 'http://localhost:8081'},
         default_key_schema=key_schema, default_value_schema=value_schema)
@@ -41,7 +40,7 @@ def main():
             'text': tweet['text'],
             'hashtags': [h['text'] for h in tweet["entities"]["hashtags"]]
         }
-        avroProducer.produce(topic='tweet', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
+        avroProducer.produce(topic='tweets', key=key, value=value, key_schema=key_schema, value_schema=value_schema)
         avroProducer.flush(10)
 
 
